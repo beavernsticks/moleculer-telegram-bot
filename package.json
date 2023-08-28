@@ -1,6 +1,6 @@
 {
   "name": "@beavernsticks/moleculer-telegram-bot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Telegram Bot package for Moleculer framework",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
