@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/beavernsticks/moleculer-telegram-bot#readme",
   "dependencies": {
+    "grammy": "^1.18.1",
     "moleculer": "^0.14.31"
   },
   "devDependencies": {
