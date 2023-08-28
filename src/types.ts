@@ -1,3 +1,4 @@
+import { Bot } from "grammy";
 import type { ServiceSchema, ServiceSettingSchema } from "moleculer";
 
 export interface TelegramBotSettings {
