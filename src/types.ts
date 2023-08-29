@@ -1,38 +1,32 @@
-import { type Bot } from "grammy";
-import { type InputMessageContent } from "grammy/types";
-import type { Service, ServiceSchema, ServiceSettingSchema } from "moleculer";
+import type {
+  ServiceMethods,
+  ServiceSchema,
+  ServiceSettingSchema,
+} from "moleculer";
+import type { Bot, RawApi } from 'grammy'
+import { Other } from "grammy/out/core/api";
 
-export interface TelegramBotSettings {
+export interface TelegramBotSettingsSchema extends ServiceSettingSchema {
   telegram: {
     /**
-     * Bot token from @BotFather.
+     * Bot token from BotFather.
      */
     token: string;
   };
 }
 
-type _TelegramBotServiceSchema = ServiceSchema<TelegramBotSettings> &
-  ServiceSchema<ServiceSettingSchema>;
+type SendMessageFunction = (
+  tgId: number,
+  message: string,
+  props: Other<RawApi, "sendMessage">
+) => Promise<void>;
 
-type _TelegramBotServiceMethods = {
-  sendMessage: (message: string, props: InputMessageContent) => Promise<void>;
-};
+export interface TelegramBotServiceMethods extends ServiceMethods {
+  sendMessage: SendMessageFunction;
+}
 
-type _TelegramBotLocalVariables = {
+export interface TelegramBotServiceSchema
+  extends ServiceSchema<TelegramBotSettingsSchema> {
+  methods: TelegramBotServiceMethods & ThisType<TelegramBotServiceSchema>;
   bot: Bot;
-};
-
-export type TelegramBotThis = Service<TelegramBotSettings> &
-  _TelegramBotServiceMethods &
-  _TelegramBotLocalVariables;
-
-export type ServiceMethods = ThisType<
-  _TelegramBotServiceSchema &
-    _TelegramBotServiceMethods &
-    _TelegramBotLocalVariables
->;
-
-export type TelegramBotServiceSchema = {
-  name: "TelegramBotMixin";
-  methods: ServiceMethods;
-} & _TelegramBotServiceSchema;
+}
