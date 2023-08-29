@@ -21,8 +21,11 @@ type SendMessageFunction = (
   props: Other<RawApi, "sendMessage">
 ) => Promise<void>;
 
+type InitBotFunction = () => void;
+
 export interface TelegramBotServiceMethods extends ServiceMethods {
   sendMessage: SendMessageFunction;
+  initBot: InitBotFunction;
 }
 
 export interface TelegramBotServiceSchema

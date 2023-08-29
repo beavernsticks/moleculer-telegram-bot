@@ -15,6 +15,10 @@ export const TelegramBotMixin: Partial<
   },
 
   methods: {
+    initBot() {
+      this.logger.warn('`initBot()` not implemented. Please, define this method inside your service to suppress this warning.')
+    },
+
     async sendMessage(
       tgId: number,
       message: string,
@@ -33,6 +37,9 @@ export const TelegramBotMixin: Partial<
   },
 
   async started() {
+    if (typeof this.initBot === 'function') {
+      this.initBot();
+    }
     const bot = this.bot as Bot;
     await bot.start();
     this.logger.info("Bot started.");
