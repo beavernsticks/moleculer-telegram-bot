@@ -1,9 +1,11 @@
-import { Errors } from "moleculer";
+import { Errors, ServiceSchema } from "moleculer";
 import { Bot, RawApi } from "grammy";
 import { Other } from "grammy/out/core/api";
 import { TelegramBotServiceSchema } from "./types";
 
-export const TelegramBotMixin: Partial<TelegramBotServiceSchema> = {
+export const TelegramBotMixin: Partial<
+  ServiceSchema & TelegramBotServiceSchema
+> = {
   name: "TelegramBotMixin",
 
   settings: {

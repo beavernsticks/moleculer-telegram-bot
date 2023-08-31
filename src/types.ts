@@ -1,4 +1,5 @@
 import type {
+  Service,
   ServiceMethods,
   ServiceSchema,
   ServiceSettingSchema,
@@ -7,14 +8,14 @@ import type { Bot, RawApi } from "grammy";
 import { Other } from "grammy/out/core/api";
 
 // Mixin settings.
-export interface TelegramBotSettingsSchema extends ServiceSettingSchema {
+export type TelegramBotSettingsSchema = ServiceSettingSchema & {
   telegram: {
     /**
      * Bot token from BotFather.
      */
     token: string;
   };
-}
+};
 
 // Mixin methods.
 type SendMessageFunction = (
@@ -25,23 +26,23 @@ type SendMessageFunction = (
 
 type InitBotFunction = () => void;
 
-export interface TelegramBotServiceMethods extends ServiceMethods {
+export type TelegramBotServiceMethods = ServiceMethods & {
   sendMessage: SendMessageFunction;
   initBot: InitBotFunction;
-}
+};
 
 type TelegramBotLocalVariables = {
   bot: Bot;
 };
 
 // Mixin schema.
-export interface TelegramBotServiceSchema
-  extends ServiceSchema<TelegramBotSettingsSchema>,
-    TelegramBotLocalVariables {
-  methods: TelegramBotServiceMethods & ThisType<TelegramBotServiceSchema>;
-}
+export type TelegramBotServiceSchema =
+  ServiceSchema<TelegramBotSettingsSchema> &
+    TelegramBotLocalVariables & {
+      methods: TelegramBotServiceMethods & ThisType<TelegramBotServiceSchema>;
+    };
 
 // Mixin 'this' context.
-export type TelegramBotThis = ThisType<TelegramBotServiceSchema> &
+export type TelegramBotThis = Service<TelegramBotSettingsSchema> &
   TelegramBotServiceMethods &
   TelegramBotLocalVariables;
