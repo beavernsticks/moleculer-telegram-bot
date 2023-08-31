@@ -1,11 +1,9 @@
-import { Errors, ServiceSchema } from "moleculer";
+import { Errors } from "moleculer";
 import { Bot, RawApi } from "grammy";
 import { Other } from "grammy/out/core/api";
 import { TelegramBotServiceSchema } from "./types";
 
-export const TelegramBotMixin: Partial<
-  ServiceSchema & TelegramBotServiceSchema
-> = {
+export const TelegramBotMixin: Partial<TelegramBotServiceSchema> = {
   name: "TelegramBotMixin",
 
   settings: {
@@ -16,7 +14,9 @@ export const TelegramBotMixin: Partial<
 
   methods: {
     initBot() {
-      this.logger.warn('`initBot()` not implemented. Please, define this method inside your service to suppress this warning.')
+      this.logger.warn(
+        "`initBot()` not implemented. Please, define this method inside your service to suppress this warning."
+      );
     },
 
     async sendMessage(
@@ -37,7 +37,7 @@ export const TelegramBotMixin: Partial<
   },
 
   async started() {
-    if (typeof this.initBot === 'function') {
+    if (typeof this.initBot === "function") {
       this.initBot();
     }
     const bot = this.bot as Bot;

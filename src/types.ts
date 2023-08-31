@@ -3,9 +3,10 @@ import type {
   ServiceSchema,
   ServiceSettingSchema,
 } from "moleculer";
-import type { Bot, RawApi } from 'grammy'
+import type { Bot, RawApi } from "grammy";
 import { Other } from "grammy/out/core/api";
 
+// Mixin settings.
 export interface TelegramBotSettingsSchema extends ServiceSettingSchema {
   telegram: {
     /**
@@ -15,6 +16,7 @@ export interface TelegramBotSettingsSchema extends ServiceSettingSchema {
   };
 }
 
+// Mixin methods.
 type SendMessageFunction = (
   tgId: number,
   message: string,
@@ -28,8 +30,18 @@ export interface TelegramBotServiceMethods extends ServiceMethods {
   initBot: InitBotFunction;
 }
 
-export interface TelegramBotServiceSchema
-  extends ServiceSchema<TelegramBotSettingsSchema> {
-  methods: TelegramBotServiceMethods & ThisType<TelegramBotServiceSchema>;
+type TelegramBotLocalVariables = {
   bot: Bot;
+};
+
+// Mixin schema.
+export interface TelegramBotServiceSchema
+  extends ServiceSchema<TelegramBotSettingsSchema>,
+    TelegramBotLocalVariables {
+  methods: TelegramBotServiceMethods & ThisType<TelegramBotServiceSchema>;
 }
+
+// Mixin 'this' context.
+export type TelegramBotThis = ThisType<TelegramBotServiceSchema> &
+  TelegramBotServiceMethods &
+  TelegramBotLocalVariables;
